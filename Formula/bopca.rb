@@ -11,11 +11,6 @@ class Bopca < Formula
     on_arm do
       url "https://github.com/cboone/bopca/releases/download/v#{version}/bopca-darwin-arm64.tar.gz"
       sha256 "4f657724f5870d90908e42577a21c33d7617e2888a9611939bd2295274ed5f7b"
-
-      def install
-        bin.install "bopca"
-        install_data_files
-      end
     end
   end
 
@@ -33,26 +28,8 @@ class Bopca < Formula
   depends_on "container"
   depends_on "go" => :build
 
-  def install_data_files
-    # Extract and install data files from the source archive
-    resource("data").stage do
-      (share/"bopca").install "Containerfile"
-      (share/"bopca/config").install Dir["config/*"]
-      (share/"bopca").install "config/bopca.example.yaml"
-    end
-
-    # Generate shell completions
-    generate_completions_from_executable(bin/"bopca", "completion")
-
-    # Generate and install man pages
-    mkdir_p "man/man1"
-    system bin/"bopca", "man", "man/man1"
-    man1.install Dir["man/man1/*"]
-  end
-
   def install
     if build.head?
-      # Build from source for head installs
       ldflags = %W[
         -s -w
         -X main.version=HEAD
@@ -61,20 +38,24 @@ class Bopca < Formula
       ]
       system "go", "build", *std_go_args(ldflags:)
 
-      # Install data files from source
       (share/"bopca").install "Containerfile"
       (share/"bopca/config").install Dir["config/*"]
       (share/"bopca").install "config/bopca.example.yaml"
+    else
+      bin.install "bopca"
 
-      # Generate completions
-      generate_completions_from_executable(bin/"bopca", "completion")
-
-      # Generate and install man pages
-      mkdir_p "man/man1"
-      system bin/"bopca", "man", "man/man1"
-      man1.install Dir["man/man1/*"]
+      resource("data").stage do
+        (share/"bopca").install "Containerfile"
+        (share/"bopca/config").install Dir["config/*"]
+        (share/"bopca").install "config/bopca.example.yaml"
+      end
     end
-    # Binary installs are handled by platform-specific blocks above
+
+    generate_completions_from_executable(bin/"bopca", "completion")
+
+    mkdir_p "man/man1"
+    system bin/"bopca", "man", "man/man1"
+    man1.install Dir["man/man1/*"]
   end
 
   def caveats
