@@ -1,6 +1,6 @@
 # homebrew-bopca
 
-Homebrew tap for [bopca](https://github.com/cboone/bopca) -- run LLM agents in lightweight macOS VMs.
+Homebrew tap for [bopca](https://github.com/cboone/bopca). Run LLM agents in lightweight macOS VMs.
 
 ## Installation
 
@@ -17,4 +17,4 @@ brew install bopca
 
 ## License
 
-[MIT](LICENSE)
+[MIT License](./LICENSE). TL;DR: Do whatever you want with this software, just keep the copyright notice included. The authors aren't liable if something goes wrong.
