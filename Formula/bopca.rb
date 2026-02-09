@@ -21,7 +21,7 @@ class Bopca < Formula
 
   # Data files (Containerfile, config) needed at runtime
   resource "data" do
-    url "https://github.com/cboone/bopca/archive/refs/tags/v#{version}.tar.gz"
+    url "https://github.com/cboone/bopca/archive/refs/tags/v0.6.0.tar.gz"
     sha256 "64e036739a850c354ebf29935d57615a9ac2aed773c6b26245be83da4e124fc3"
   end
 
