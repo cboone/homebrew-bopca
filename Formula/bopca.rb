@@ -39,15 +39,15 @@ class Bopca < Formula
       system "go", "build", *std_go_args(ldflags:)
 
       (share/"bopca").install "Containerfile"
-      (share/"bopca/config").install Dir["config/*"]
       (share/"bopca").install "config/bopca.example.yaml"
+      (share/"bopca/config").install Dir["config/*"]
     else
       bin.install "bopca"
 
       resource("data").stage do
         (share/"bopca").install "Containerfile"
-        (share/"bopca/config").install Dir["config/*"]
         (share/"bopca").install "config/bopca.example.yaml"
+        (share/"bopca/config").install Dir["config/*"]
       end
     end
 
